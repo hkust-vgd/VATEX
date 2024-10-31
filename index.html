@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Mask Grounding is an innovative auxiliary task that can be added during training to improve model performance for Referring Image Segmentation (RIS)">
+  <meta name="keywords" content="VATEX, RIS, Vision-Aware Text Features, Referring Image Segmentation">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vision-Aware Text Features in Referring Image Segmentation: From Object Understanding to Context Understanding</title>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <style>
+    .abstract-container {
+      animation: fadeIn 1s ease-in;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      margin: 2rem 0;
+    }
+
+    .highlight-box {
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border-left: 5px solid #4a90e2;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+
+    .highlight-box:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature-box {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .feature-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    }
+
+    .features-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .features-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .object-feature {
+      background: linear-gradient(135deg, #fff5f0 0%, #fff 100%);
+      border-left: 4px solid #C55A11;
+    }
+
+    .context-feature {
+      background: linear-gradient(135deg, #f0f5ff 0%, #fff 100%);
+      border-left: 4px solid #0570C0;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-spaced is-1 publication-title">Vision-Aware Text Features in Referring Image Segmentation:<br>From Object Understanding to Context Understanding</h1>
+          <h2 class="subtitle is-3" style="color: #ff3860; margin-bottom: 12px; margin-top: -12px; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); animation: fadeIn 1s ease-out;">WACV 2025</h2>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://github.com/itruonghai">Hai Nguyen-Truong</a><sup>1,*</sup>,</span>
+            <span class="author-block">
+              <a href="https://nero1342.github.io">E-Ro Nguyen</a><sup>2,3,5,*</sup>,</span>
+            <span class="author-block">
+              <a href="/">Tuan-Anh Vu</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="/">Minh-Triet Tran</a><sup>2,3</sup>,
+            </span>
+            <span class="author-block">
+              <a href="/">Binh-Son Hua</a><sup>4</sup>,
+            </span>
+            <span class="author-block">
+              <a href="/">Sai-Kit Yeung</a><sup>1</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>The Hong Kong University of Science and Technology</span>
+            <span class="author-block"><sup>2</sup>University of Science, VNU-HCM, Ho Chi Minh city, Vietnam</span>
+            <span class="author-block"><sup>3</sup>Viet Nam National University, Ho Chi Minh city, Vietnam</span>
+            <span class="author-block"><sup>4</sup>Trinity College Dublin, Ireland</span>
+            <span class="author-block"><sup>5</sup>Stony Brook University, New York, USA</span>
+          </div>
+          <div class="is-size-6 publication-authors">
+            <span class="author-block"><sup>*</sup>Equal contribution</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2404.08590"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper (Coming Soon)</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2404.08590"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/nero1342/VATEX"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="./static/images/teaser.png" alt="empty">
+      <h2 class="subtitle has-text-centered">
+        <br>
+        <span>
+          Qualitative comparison between LAVT and Ours. The yellow box indicates the wrong segmentation results. 
+          <span style="color: #C55A11">Object understanding</span> and 
+          <span style="color: #0570C0">Context understanding</span> 
+          are required to tackle the challenge of complex and ambiguous language expression.
+        </span>
+      </h2>
+      <h2 class="subtitle has-text-centered">
+        <br>
+        <strong style="color: orange;font-size: 1.2em">TL;DR:</strong>
+        <i><span style="font-size: 1.0em; font-weight: bold">VATEX</span> is a novel method for referring image segmentation that leverages vision-aware text features to improve text understanding. By decomposing language cues into object and context understanding, the model can better localize objects and interpret complex sentences, leading to significant performance gains.
+        </i>
+      </h2>
+    </div>
+  </div>
+</section>
+
+
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 animate__animated animate__fadeIn">Abstract</h2>
+        <div class="content has-text-justified">
+          <div class="abstract-container">
+            <p>
+              Referring image segmentation is a challenging task that involves generating pixel-wise segmentation masks based on natural language descriptions. 
+              The complexity of this task increases with the intricacy of the sentences provided.
+            </p>
+            
+            <p>
+              Existing methods have relied mostly on visual features to generate the segmentation masks while treating text features as supporting components. 
+              However, this under-utilization of text understanding limits the model's capability to fully comprehend the given expressions.
+            </p>
+
+            <div class="highlight-box">
+              <p style="font-weight: bold; color: #333; font-size: 1.2em; margin: 0;">
+                In this work, we propose a novel framework that specifically emphasizes 
+                <span style="color: #C55A11; font-weight: 700;">object</span> and 
+                <span style="color: #0570C0; font-weight: 700;">context</span> 
+                comprehension inspired by human cognitive processes through Vision-Aware Text Features.
+              </p>
+            </div>
+
+            <div class="features-container">
+              <div class="feature-box object-feature">
+                <h4 style="color: #C55A11; font-weight: 600; font-size: 1.2em;">
+                  <i class="fas fa-bullseye"></i> Object Understanding
+                </h4>
+                <!-- <h5 style="color: #C55A11; font-size: 1em;"> -->
+                  <!-- <span style="background: linear-gradient(120deg, rgba(197,90,17,0.1) 0%, rgba(197,90,17,0.2) 100%); padding: 2px 6px; border-radius: 4px; font-weight: 600;">CLIP Prior</span> -->
+                <!-- </h5> -->
+                <p>
+                  We introduce a <span style="color: #C55A11; font-weight: 600;background: linear-gradient(120deg, rgba(197,90,17,0.1) 0%, rgba(197,90,17,0.2) 100%); padding: 2px 6px; border-radius: 4px; font-weight: 600;">CLIP Prior</span> module to localize the main object of interest and embed the object heatmap into the query initialization process.
+                </p>
+              </div>
+
+              <div class="feature-box context-feature">
+                <h4 style="color: #0570C0; font-weight: 600; font-size: 1.2em;">
+                  <i class="fas fa-project-diagram"></i> Context Understanding
+                </h4>
+                <!-- <h5 style="color: #0570C0; font-size: 1em;">CMD and MCC</h5> -->
+                <p>
+                  We propose a combination of two components: 
+                  <span style="color: #0570C0; font-weight: 600;background: linear-gradient(120deg, rgba(5,112,192,0.1) 0%, rgba(5,112,192,0.2) 100%); padding: 2px 6px; border-radius: 4px; font-weight: 600;">Contextual Multimodal Decoder (CMD)</span> and 
+                  <span style="color: #0570C0; font-weight: 600;background: linear-gradient(120deg, rgba(5,112,192,0.1) 0%, rgba(5,112,192,0.2) 100%); padding: 2px 6px; border-radius: 4px; font-weight: 600;">Meaning Consistency Constraint (MCC)</span>, 
+                  to further enhance the coherent and consistent interpretation of language cues.
+                </p>
+              </div>
+            </div>
+
+            <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin-top: 2rem;">
+              <p style="margin: 0;">
+                <span style="color: #2ea44f; font-weight: 600;">✨ Results:</span> 
+                Our method achieves significant performance improvements on three benchmark datasets RefCOCO, RefCOCO+ and G-Ref.
+                <br><br>
+                <span style="color: #0366d6; font-weight: 600;">🚀 Code Released:</span> 
+                Our code and pre-trained weights are available at <a href="https://github.com/nero1342/VATEX" target="_blank" style="color: #0366d6; font-weight: 600;">https://github.com/nero1342/VATEX</a>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Method. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Method</h2>
+        <div class="content has-text-justified">
+          <div class="content has-text-justified">
+            <h3>Overall Framework</h3>
+            <img src="./static/images/overview.png">
+            <p>
+              <br>
+              The overall framework of VATEX processes input images and language expressions through two concurrent pathways. 
+              Initially, the <span style="color: #C55A11; font-weight: 600;background: linear-gradient(120deg, rgba(197,90,17,0.1) 0%, rgba(197,90,17,0.2) 100%); padding: 2px 6px; border-radius: 4px; font-weight: 600;">CLIP Prior</span> module generates object queries, 
+              while simultaneously, traditional Visual and Text Encoders create multiscale visual feature maps and 
+              word-level text features. These visual and text features are passed into the <span style="color: #0570C0; font-weight: 600;background: linear-gradient(120deg, rgba(5,112,192,0.1) 0%, rgba(5,112,192,0.2) 100%); padding: 2px 6px; border-radius: 4px; font-weight: 600;">
+                Contextual Multimodal Decoder (CMD)</span> to enable multimodal interactions, yielding vision-aware text features and text-enhanced 
+                visual features. We then harness vision-aware text features to ensure semantic consistency across varied textual descriptions that 
+                reference the same object by employing sentence-level contrastive learning, as described in the <span style="color: #0570C0; font-weight: 600;background: linear-gradient(120deg, rgba(5,112,192,0.1) 0%, rgba(5,112,192,0.2) 100%); padding: 2px 6px; border-radius: 4px; font-weight: 600;">
+                  Meaning Consistency Constraint (MCC)</span> section. On the other hand, the text-enhanced visual features and the object queries generated
+                   by the CLIP Prior are refined through a Masked-attention Transformer Decoder to produce the final output segmentation masks.
+            </p>
+          </div>
+
+          <div class="content has-text-justified clip-prior-details">
+            <h3><span style="color: #C55A11; font-weight: 600;background: linear-gradient(120deg, rgba(197,90,17,0.1) 0%, rgba(197,90,17,0.2) 100%); padding: 2px 6px; border-radius: 4px; font-weight: 600;">CLIP Prior</span></h3>
+            <img src="./static/images/clipprior.png">
+            <p>
+              The CLIP Prior module leverages the powerful visual-semantic alignment capabilities of CLIP to generate initial object queries. By utilizing CLIP's pre-trained knowledge, we can better localize objects mentioned in the referring expressions before detailed segmentation.
+            </p>
+          </div>
+
+          <div class="content has-text-justified mcc-details">
+            <h3><span style="color: #0570C0; font-weight: 600;background: linear-gradient(120deg, rgba(5,112,192,0.1) 0%, rgba(5,112,192,0.2) 100%); padding: 2px 6px; border-radius: 4px; font-weight: 600;">Meaning Consistency Constraint (MCC)</span></h3>
+            <img src="./static/images/mcc.png">
+            <p>
+              The MCC component ensures semantic consistency by employing contrastive learning at the sentence level. This helps the model understand that different textual descriptions referring to the same object should map to similar semantic representations, improving robustness and generalization.
+            </p>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Main Results</h2>
+        <div class="content has-text-justified">
+          <img src="./static/images/table1.png" alt="empty">
+          <p>
+            <br>
+            In this table, we compare our method with other leading RIS methods using the oIoU metric and show that it achieves multiple new state-of-the-art results. <i> Single dataset </i> refers to strictly following the predefined train/test splits of the original RefCOCO, RefCOCO+ and G-Ref datasets. <i> Multiple datasets </i> refers to combining the train splits from these 3 datasets with test images removed to prevent data leakage. <i> Extra datasets </i> refers to using additional data beyond RefCOCO, RefCOCO+ and G-Ref. † indicates models that use extra datasets. ‡ indicates that our model only uses multiple datasets. Bold indicates best.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Visualizations</h2>
+        <div class="content has-text-justified">
+          <img src="./static/images/visualizations.png" alt="empty">
+          <p>
+            <br>
+            In this figure, we show some visualizations of our network's predictions. Compared to one of the state-of-the-art method, LAVT, our method performs much better in various complex scenerios, suggesting its impressive capability to reason about various complex visual-object relationships.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@inproceedings{chng2023mask,
+  author    = {Chng, Yong Xien and Zheng, Henry and Han, Yizeng and Qiu, Xuchong and Huang, Gao},
+  title     = {Mask Grounding for Referring Image Segmentation},
+  booktitle = {CVPR},
+  year      = {2024},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            Thanks for the project template by <a href="https://github.com/nerfies/nerfies.github.io"> Nerfies Project</a>. 
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
