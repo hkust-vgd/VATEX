@@ -308,7 +308,18 @@
             <h3><span style="color: #C55A11; font-weight: 600;background: linear-gradient(120deg, rgba(197,90,17,0.1) 0%, rgba(197,90,17,0.2) 100%); padding: 2px 6px; border-radius: 4px; font-weight: 600;">CLIP Prior</span></h3>
             <img src="./static/images/clipprior.png">
             <p>
-              The CLIP Prior module leverages the powerful visual-semantic alignment capabilities of CLIP to generate initial object queries. By utilizing CLIP's pre-trained knowledge, we can better localize objects mentioned in the referring expressions before detailed segmentation.
+              The CLIP Prior module leverages the powerful visual-semantic alignment capabilities of CLIP to generate initial object queries. 
+              By utilizing CLIP's pre-trained knowledge, we can better localize objects mentioned in the referring expressions before detailed segmentation
+              , especially for out-of-vocabulary objects.
+            </p>
+          </div>
+
+          <div class="content has-text-justified cmd-details">
+            <h3><span style="color: #0570C0; font-weight: 600;background: linear-gradient(120deg, rgba(5,112,192,0.1) 0%, rgba(5,112,192,0.2) 100%); padding: 2px 6px; border-radius: 4px; font-weight: 600;"">Contextutual Multimodal Decoder (CMD)</span></h3>
+            <img src="./static/images/cmd.png">
+            <p>
+              The CMD module enables multimodal interactions by integrating visual and text features, 
+              allowing the model to understand the semantic relationships between visual and textual cues.
             </p>
           </div>
 
@@ -316,7 +327,9 @@
             <h3><span style="color: #0570C0; font-weight: 600;background: linear-gradient(120deg, rgba(5,112,192,0.1) 0%, rgba(5,112,192,0.2) 100%); padding: 2px 6px; border-radius: 4px; font-weight: 600;">Meaning Consistency Constraint (MCC)</span></h3>
             <img src="./static/images/mcc.png">
             <p>
-              The MCC component ensures semantic consistency by employing contrastive learning at the sentence level. This helps the model understand that different textual descriptions referring to the same object should map to similar semantic representations, improving robustness and generalization.
+              The MCC component ensures semantic consistency by employing contrastive learning at the sentence level. 
+              This helps the model understand that different textual descriptions referring to the same object should map to similar semantic representations, 
+              improving robustness and generalization.
             </p>
           </div>
         </div>
@@ -335,7 +348,7 @@
           <img src="./static/images/table1.png" alt="empty">
           <p>
             <br>
-            In this table, we compare our method with other leading RIS methods using the oIoU metric and show that it achieves multiple new state-of-the-art results. <i> Single dataset </i> refers to strictly following the predefined train/test splits of the original RefCOCO, RefCOCO+ and G-Ref datasets. <i> Multiple datasets </i> refers to combining the train splits from these 3 datasets with test images removed to prevent data leakage. <i> Extra datasets </i> refers to using additional data beyond RefCOCO, RefCOCO+ and G-Ref. † indicates models that use extra datasets. ‡ indicates that our model only uses multiple datasets. Bold indicates best.
+            As shown in the table, our method achieves <span style="font-style: italic; font-weight: 600;">remarkable performance improvements</span> over state-of-the-art methods across all benchmarks on mIoU metrics. Notably, we surpass recent methods like <b>CGFormer</b> and <b>VG-LAW</b> by <span style="font-style: italic; font-weight: 600;">substantial margins</span>: <span style="color: #2ea44f; text-shadow: 1px 1px 3px rgba(46,164,79,0.3);">+1.23%</span> and <span style="color: #2ea44f; text-shadow: 1px 1px 3px rgba(46,164,79,0.3);">+3.11%</span> on <b>RefCOCO</b>, <span style="color: #2ea44f; text-shadow: 1px 1px 3px rgba(46,164,79,0.3);">+1.46%</span> and <span style="color: #2ea44f; text-shadow: 1px 1px 3px rgba(46,164,79,0.3);">+3.31%</span> on <b>RefCOCO+</b>, and <span style="color: #2ea44f; text-shadow: 1px 1px 3px rgba(46,164,79,0.3);">+2.16%</span> and <span style="color: #2ea44f; text-shadow: 1px 1px 3px rgba(46,164,79,0.3);">+4.37%</span> on <b>G-Ref</b> validation splits respectively. The more complex the expressions, the greater the performance gains achieved by VATEX. Even compared to LISA, a large pre-trained vision-language model, VATEX consistently achieves an <span style="font-style: italic; font-weight: 600;">impressive</span> <span style="color: #2ea44f; text-shadow: 1px 1px 3px rgba(46,164,79,0.3);">3-5%</span> better performance across all datasets.
           </p>
         </div>
       </div>
@@ -350,18 +363,27 @@
       <div class="column is-four-fifths">
         <h2 class="title is-3">Visualizations</h2>
         <div class="content has-text-justified">
-          <img src="./static/images/visualizations.png" alt="empty">
-          <p>
+          <img src="./static/images/visualization.png" alt="empty">
+          <p style="line-height: 1.5;">
+            Our visualizations demonstrate VATEX's superior performance in <span style="color: #34A85A; font-weight: 800;">complex visual reasoning scenarios</span>. The model excels at:
             <br>
-            In this figure, we show some visualizations of our network's predictions. Compared to one of the state-of-the-art method, LAVT, our method performs much better in various complex scenerios, suggesting its impressive capability to reason about various complex visual-object relationships.
+            <span style="color: #34A85A; font-weight: 800;">• Distinguishing Similar Objects:</span> Successfully differentiates between multiple similar instances (e.g., 1st column: identifying the seated person vs. standing person on a tennis court).
+            <br>
+            <span style="color: #34A85A; font-weight: 800;"">• Fine-grained Recognition:</span> Precisely locates specific items among visually similar alternatives (e.g., 2nd column: distinguishing a particular sushi plate among various food dishes).
+            <br>
+            <span style="color: #34A85A; font-weight: 800;">• Detailed Segmentation:</span> Captures intricate object details beyond ground truth annotations (e.g., 4th column: complete umbrella shaft segmentation).
+            <br>
+            <span style="color: #34A85A; font-weight: 800;">• Accurate Object Relationships:</span> Better understands complex interactions (e.g., 6th & 7th column: correctly segmenting the bear in "bear child is hugging" and "bear with 59 tag" scenario).
+            <br>
+            Our <span style="font-weight: 800; background: #ffd7d7; color: #8b0a1a;">instance-based architecture</span> produces smoother, more complete masks compared to LAVT and CRIS's pixel-based approach. 
+            <!-- However, VATEX shows limitations with numerical ordering and indirect object references, highlighting areas for future improvement. The visualization includes failure cases in the last two columns. Best viewed in color. -->
           </p>
-        </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section" id="BibTeX">
+<!-- <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
     <pre><code>@inproceedings{chng2023mask,
@@ -371,7 +393,7 @@
   year      = {2024},
 }</code></pre>
   </div>
-</section>
+</section> -->
 
 
 <footer class="footer">
